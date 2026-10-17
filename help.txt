@@ -1,0 +1,10 @@
+Welcome to BashBrunch! A minimal terminal-based coding harness. In here, the AI assistant can access tools to help you do your work. It will be using bash directly and will be communicating with you through this interface.
+
+Available commands:
+/? - Show this help message
+/! <command> - Execute a shell command
+/v - Show the current version
+/p <provider_name> - Change the provider
+/m <model_name> - Change the model
+/q - Exit the program
+
