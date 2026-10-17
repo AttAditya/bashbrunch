@@ -1,13 +1,24 @@
 #!/bin/bash
 
 brunch_root="."
+session_id=$(uuidgen)
 
 history_file="$brunch_root/history.txt"
 system_prompt=$(cat $brunch_root/system.txt)
 provider=$(cat $brunch_root/provider.txt)
 provider_file="$brunch_root/providers/$provider.sh"
 model=$(cat $brunch_root/models/$provider.txt)
-session_id=$(uuidgen)
+version=$(cat $brunch_root/version.txt)
+
+latest_version=$(curl \
+  -s https://bashbrunch.attaditya.space/version.txt
+)
+
+if [ "$version" != "$latest_version" ]; then
+  echo "A new version of BashBrunch is available: $latest_version"
+  echo "Please update your installation."
+  echo ""
+fi
 
 echo "BashBrunch $(cat $brunch_root/version.txt)"
 echo "Use /? for help"
