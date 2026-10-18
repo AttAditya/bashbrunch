@@ -60,8 +60,13 @@ ai_buffer=""
 ai_result=""
 requested_exit=0
 
+if [ ! -f "$session_file" ]; then
+  touch "$session_file"
+fi
+
 add_chat() {
   chat_history="${chat_history}$1: $2\n"
+  echo "$1: $2" >> "$session_file"
 }
 
 run_shell() {
@@ -237,7 +242,6 @@ while [ true ]; do
       skip_ai=1
       ;;
     "/q")
-      echo "Exiting..."
       break
       ;;
     "/!")
@@ -255,7 +259,12 @@ while [ true ]; do
   fi
 done
 
+if [ $requested_exit -eq 1 ]; then
+  echo "Exiting! (session closed by AI)"
+else
+  echo "Exiting!"
+fi
+
 history -w "$history_file"
-echo "$chat_history" > "$session_file"
 echo "Session saved to $session_file"
 
