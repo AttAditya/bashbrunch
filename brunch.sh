@@ -32,6 +32,10 @@ latest_version=$(curl \
   -s https://bashbrunch.attaditya.space/version.txt
 )
 
+echo() {
+  printf "$@\n"
+}
+
 if [ "$version" != "$latest_version" ]; then
   echo "A new version of BashBrunch is available: $latest_version"
   echo "Please update your installation."
@@ -88,34 +92,41 @@ use_ai() {
 
 read_buffer() {
   line_count=$(echo "$ai_buffer" | wc -l | xargs)
-  line_count=$((line_count + 1))
-  checkpoint=$(echo "$ai_buffer" \
+  line_count=$((line_count))
+  checkpoint=$(echo "$ai_buffer\n/pass" \
     | tail -n +2 \
     | grep -n '^/' \
     | grep -o '^[^:]*' \
-    | head -n 1 \
-    | xargs
+    | head -n 1
   )
 
   if [ -z "$checkpoint" ]; then
     checkpoint=$line_count
   fi
 
-  ai_result=$(echo "$ai_buffer" | head -n $((checkpoint - 1)))
-  ai_buffer=$(echo "$ai_buffer" | tail -n +$checkpoint)
+  ai_result=$(echo "$ai_buffer" | head -n $checkpoint)
+  ai_buffer=$(echo "$ai_buffer" | tail -n +$((checkpoint + 1)))
+}
+
+get_command() {
+  first_line=$(echo "$1" | head -n 1)
+  command=$(echo "$first_line" | grep -o '^[^ ]*' | head -n 1)
+  echo "$command"
+}
+
+get_content() {
+  first_line=$(echo "$1" | head -n 1 | sed 's/^[^ ]* *//')
+  rest_lines=$(echo "$1" | tail -n +2)
+  echo "$first_line\n$rest_lines"
 }
 
 run_ai() {
   while true; do
     use_ai
     read_buffer
+    add_chat "assistant" "$ai_result"
     
-    result="$ai_result"
-    ai_buffer=$(echo "$ai_buffer" | tail -n +2)
-
-    add_chat "assistant" "$result"
-    
-    command_type=$(echo "$result" \
+    command_type=$(echo "$ai_result" \
       | grep '^\/' \
       | wc -l \
       | xargs \
@@ -125,16 +136,16 @@ run_ai() {
       continue
     fi
 
-    command=$(echo "$result" | grep -o '^[^ ]*' | head -n 1)
-    content=$(echo "$result" | sed 's/^[^ ]* *//')
+    command=$(get_command "$ai_result")
+    content=$(get_content "$ai_result")
     
     case "$command" in
       "/pass")
         break
         ;;
       "/msg")
-        echo "$content"
-        echo ""
+        printf "$content"
+        echo "\n"
         ;;
       "/sh")
         run_shell "$content"
