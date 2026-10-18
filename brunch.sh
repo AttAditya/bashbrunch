@@ -1,7 +1,11 @@
 #!/bin/bash
 
 brunch_root="."
-session_id=$(uuidgen)
+session_id=$(echo "$(date +%s)-$RANDOM-$RANDOM")
+
+if [ -n "$BRUNCH_ROOT" ]; then
+  brunch_root="$BRUNCH_ROOT"
+fi
 
 history_file="$brunch_root/history.txt"
 system_prompt=$(cat $brunch_root/system.txt)
