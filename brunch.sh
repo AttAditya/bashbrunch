@@ -124,20 +124,20 @@ run_ai() {
   while true; do
     use_ai
     read_buffer
-    add_chat "assistant" "$ai_result"
-    
-    command_type=$(echo "$ai_result" \
+
+    command=$(get_command "$ai_result")
+    content=$(get_content "$ai_result")
+    command_type=$(echo "$command" \
       | grep '^\/' \
       | wc -l \
       | xargs \
     )
-    
+
     if [ "$command_type" -eq 0 ]; then
       continue
     fi
-
-    command=$(get_command "$ai_result")
-    content=$(get_content "$ai_result")
+    
+    add_chat "assistant" "$ai_result"
     
     case "$command" in
       "/pass")
