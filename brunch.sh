@@ -39,6 +39,7 @@ history -r "$history_file"
 prompt=""
 chat_history="${system_prompt}\n"
 ai_buffer=""
+ai_result=""
 
 add_chat() {
   chat_history="${chat_history}$1: $2\n"
@@ -47,11 +48,17 @@ add_chat() {
 run_shell() {
   echo "\n[[ shell: $1 ]]"
   add_chat "shell" "$1"
-  executed=$(eval "$1")
-  echo "$executed"
+
+  output_file=$(mktemp)
+  eval "$1" 2>&1 | tee "$output_file"
+  exit_code=${PIPESTATUS[0]}
+
+  executed=$(cat "$output_file")
+  rm -f "$output_file"
+  
   add_chat "shell output" "$executed"
-  echo "[[ shell complete ]]\n"
-  add_chat "shell" "execution complete"
+  echo "[[ shell complete (code $exit_code) ]]\n"
+  add_chat "shell" "execution complete (code $exit_code)"
 }
 
 use_ai() {
@@ -65,11 +72,31 @@ use_ai() {
   fi
 }
 
+read_buffer() {
+  line_count=$(echo "$ai_buffer" | wc -l | xargs)
+  line_count=$((line_count + 1))
+  checkpoint=$(echo "$ai_buffer" \
+    | tail -n +2 \
+    | grep -n '^/' \
+    | grep -o '^[^:]*' \
+    | head -n 1 \
+    | xargs
+  )
+
+  if [ -z "$checkpoint" ]; then
+    checkpoint=$line_count
+  fi
+
+  ai_result=$(echo "$ai_buffer" | head -n $((checkpoint - 1)))
+  ai_buffer=$(echo "$ai_buffer" | tail -n +$checkpoint)
+}
+
 run_ai() {
   while true; do
     use_ai
+    read_buffer
     
-    result=$(echo "$ai_buffer" | head -n 1)
+    result="$ai_result"
     ai_buffer=$(echo "$ai_buffer" | tail -n +2)
 
     add_chat "assistant" "$result"
