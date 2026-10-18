@@ -14,34 +14,34 @@ sleep 10
 echo "Continuing with installation...\n"
 
 site="https://bashbrunch.attaditya.space"
+brunch_dir="$HOME/.bashbrunch"
 
-echo "Creating installation directory..."
+echo "Setting up directories..."
 
-mkdir -p "$HOME/.bashbrunch"
+mkdir -p "$brunch_dir"
+mkdir -p "$brunch_dir/providers"
+mkdir -p "$brunch_dir/config"
+mkdir -p "$brunch_dir/config/models"
+mkdir -p "$brunch_dir/data"
+mkdir -p "$brunch_dir/data/sessions"
 
 echo "Downloading information files..."
 
-curl -fsSL "$site/brunch.sh" > "$HOME/.bashbrunch/README.md"
-curl -fsSL "$site/version.txt" > "$HOME/.bashbrunch/LICENSE"
+curl -fsSL "$site/README.md" > "$brunch_dir/README.md"
+curl -fsSL "$site/LICENSE" > "$brunch_dir/LICENSE"
+curl -fsSL "$site/version.txt" > "$brunch_dir/version.txt"
 
 echo "Downloading core files..."
 
-curl -fsSL "$site/brunch.sh" > "$HOME/.bashbrunch/brunch.sh"
-curl -fsSL "$site/version.txt" > "$HOME/.bashbrunch/version.txt"
-curl -fsSL "$site/system.txt" > "$HOME/.bashbrunch/system.txt"
-curl -fsSL "$site/help.txt" > "$HOME/.bashbrunch/help.txt"
-
-echo "Setting up additional directories and downloading providers..."
-
-mkdir -p "$HOME/.bashbrunch/providers"
-mkdir -p "$HOME/.bashbrunch/models"
-mkdir -p "$HOME/.bashbrunch/sessions"
+curl -fsSL "$site/brunch.sh" > "$brunch_dir/brunch.sh"
 
 echo "Downloading provider scripts..."
 
+provider_path="$brunch_dir/providers"
 provider_site="$site/providers"
-provider_path="$HOME/.bashbrunch/providers"
-provider_list=$(curl -fsSL "$provider_site/list.txt")
+
+curl -fsSL "$provider_site/list.txt" > "$provider_path/list.txt"
+provider_list=$(cat "$provider_path/list.txt")
 
 for provider in $provider_list; do
   url="$provider_site/$provider.sh"
@@ -50,20 +50,36 @@ for provider in $provider_list; do
   curl -fsSL "$url" > "$path"
 done
 
-echo "Setting up default provider and model..."
+echo "Setting up config files..."
 
-provider="unset"
-model="unknown"
+config_path="$brunch_dir/config"
 
-echo "" > "$HOME/.bashbrunch/history.txt"
-echo $provider > "$HOME/.bashbrunch/provider.txt"
-echo $model > "$HOME/.bashbrunch/models/$provider.txt"
+if [ ! -f "$config_path/provider.txt" ]; then
+  echo "unset" > "$config_path/provider.txt"
+fi
+
+for provider in $provider_list; do
+  model_file="$config_path/models/$provider.txt"
+  
+  if [ ! -f "$model_file" ]; then
+    echo "unset" > "$model_file"
+  fi
+done
+
+echo "Downloading config files..."
+
+curl -fsSL "$site/config/system.txt" > "$config_path/system.txt"
+curl -fsSL "$site/config/help.txt" > "$config_path/help.txt"
+
+echo "Setting up data files..."
+
+touch "$brunch_dir/data/history.txt"
 
 echo "Installation complete!\n"
 echo "Adding execute permissions scripts..."
 
-chmod +x "$HOME/.bashbrunch/brunch.sh"
-chmod +x "$HOME/.bashbrunch/providers/"*.sh
+chmod +x "$brunch_dir/brunch.sh"
+chmod +x "$brunch_dir/providers/"*.sh
 
 echo "Adding alias to your shell configuration file..."
 
@@ -76,8 +92,8 @@ fi
 echo "" >> "$shell_config"
 echo "# BashBrunch alias" >> "$shell_config"
 echo "" >> "$shell_config"
-echo "alias brunch='$HOME/.bashbrunch/brunch.sh'" >> "$shell_config"
-echo "export BRUNCH_ROOT='$HOME/.bashbrunch'" >> "$shell_config"
+echo "alias brunch='$brunch_dir/brunch.sh'" >> "$shell_config"
+echo "export BRUNCH_ROOT='$brunch_dir'" >> "$shell_config"
 echo "" >> "$shell_config"
 
 echo "Added alias to $shell_config. Run: source $shell_config"

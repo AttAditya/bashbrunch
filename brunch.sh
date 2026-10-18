@@ -7,12 +7,26 @@ if [ -n "$BRUNCH_ROOT" ]; then
   brunch_root="$BRUNCH_ROOT"
 fi
 
-history_file="$brunch_root/history.txt"
-system_prompt=$(cat $brunch_root/system.txt)
-provider=$(cat $brunch_root/provider.txt)
+version_file="$brunch_root/version.txt"
+
+data_dir="$brunch_root/data"
+config_dir="$brunch_root/config"
+
+history_file="$data_dir/history.txt"
+session_file="$data_dir/sessions/$session_id.txt"
+
+help_file="$config_dir/help.txt"
+system_file="$config_dir/system.txt"
+provider_select_file="$config_dir/provider.txt"
+
+system_prompt=$(cat $system_file)
+provider=$(cat $provider_select_file)
+
 provider_file="$brunch_root/providers/$provider.sh"
-model=$(cat $brunch_root/models/$provider.txt)
-version=$(cat $brunch_root/version.txt)
+model_select_file="$config_dir/models/$provider.txt"
+model=$(cat $model_select_file)
+
+version=$(cat $version_file)
 
 latest_version=$(curl \
   -s https://bashbrunch.attaditya.space/version.txt
@@ -24,7 +38,7 @@ if [ "$version" != "$latest_version" ]; then
   echo ""
 fi
 
-echo "BashBrunch $(cat $brunch_root/version.txt)"
+echo "BashBrunch $version"
 echo "Use /? for help"
 echo ""
 
@@ -65,7 +79,7 @@ use_ai() {
   buffer_pending=$(echo "$ai_buffer" | wc -w | xargs)
 
   if [ "$buffer_pending" -eq 0 ]; then
-    ai_buffer=$(sh $provider_file "$model" \
+    ai_buffer=$(bash $provider_file "$model" \
       "$system_prompt
       $chat_history" \
     )
@@ -126,7 +140,7 @@ run_ai() {
         run_shell "$content"
         ;;
       "/v")
-        add_chat "system" $(cat $brunch_root/version.txt)
+        add_chat "system" $version
         echo ""
         ;;
       *)
@@ -159,12 +173,12 @@ while [ true ]; do
   
   case "$command" in
     "/?")
-      cat $brunch_root/help.txt
+      cat $help_file
       echo ""
       skip_ai=1
       ;;
     "/v")
-      cat $brunch_root/version.txt
+      echo "BashBrunch $version"
       echo ""
       skip_ai=1
       ;;
@@ -172,10 +186,15 @@ while [ true ]; do
       if [ -z "$content" ]; then
         echo "Active Provider: $provider"
       else
-        echo "$content" > "$brunch_root/provider.txt"
-        provider=$(cat $brunch_root/provider.txt)
+        echo "$content" > "$provider_select_file"
+        
+        provider=$(cat $provider_select_file)
         provider_file="$brunch_root/providers/$provider.sh"
+        model_select_file="$config_dir/models/$provider.txt"
+        model=$(cat $model_select_file)
+        
         echo "Provider changed to $provider."
+        echo "Active Model: $model"
       fi
 
       echo ""
@@ -185,8 +204,8 @@ while [ true ]; do
       if [ -z "$content" ]; then
         echo "Active Model: $model"
       else
-        echo "$content" > "$brunch_root/models/$provider.txt"
-        model=$(cat $brunch_root/models/$provider.txt)
+        echo "$content" > "$model_select_file"
+        model=$(cat $model_select_file)
         echo "Model changed to $model."
       fi
       
@@ -213,6 +232,6 @@ while [ true ]; do
 done
 
 history -w "$history_file"
-echo "$chat_history" > "$brunch_root/sessions/$session_id.txt"
-echo "Session saved to $brunch_root/sessions/$session_id.txt"
+echo "$chat_history" > "$session_file"
+echo "Session saved to $session_file"
 
