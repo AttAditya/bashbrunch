@@ -86,10 +86,10 @@ chmod +x "$brunch_dir/providers/"*.sh
 
 echo "Adding alias to your shell configuration file..."
 
-shell_config="$HOME/.zshrc"
+shell_config="$HOME/.bashrc"
 
-if [ -n "$BASH_VERSION" ]; then
-  shell_config="$HOME/.bashrc"
+if [ "$SHELL" = "/bin/zsh" ]; then
+  shell_config="$HOME/.zshrc"
 fi
 
 echo "" >> "$shell_config"
