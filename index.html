@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>BashBrunch</title>
+    <meta name="description" content="A minimal terminal-based coding harness. In here, the AI assistant can access tools to help you do your work. It will be using bash directly and will be communicating with you through this interface.">
+
+    <meta property="og:url" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="BashBrunch">
+    <meta property="og:description" content="A minimal terminal-based coding harness. In here, the AI assistant can access tools to help you do your work. It will be using bash directly and will be communicating with you through this interface.">
+    <meta property="og:image" content="/web/preview.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="https://bashbrunch.attaditya.space/">
+    <meta property="twitter:url" content="">
+    <meta name="twitter:title" content="BashBrunch">
+    <meta name="twitter:description" content="A minimal terminal-based coding harness. In here, the AI assistant can access tools to help you do your work. It will be using bash directly and will be communicating with you through this interface.">
+    <meta name="twitter:image" content="/web/preview.png">
+
+    <link rel="icon" href="/web/logo.png" type="image/png" />
+  </head>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Fira+Code:wght@400;700&display=swap");
+
+    :root {
+      --color-focus: #E79F3D;
+      --color-hyped: #FFE8C9;
+      --color-accent: #FFE7A5;
+      --color-white: #FFFFFF;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    body {
+      background-color: var(--color-hyped);
+      color: var(--color-focus);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      gap: 2rem;
+      padding-top: 6rem;
+    }
+
+    .hero {
+      width: 100%;
+      height: 50vmin;
+      margin: 0 auto;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .hero h1 {
+      font-size: 12vmin;
+      font-weight: 900;
+      text-align: left;
+      line-height: 0.9;
+      align-self: flex-end;
+      padding: 4vmin 0;
+      margin-left: -4vmin;
+    }
+
+    .hero .logo {
+      height: 100%;
+    }
+
+    .install {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 4rem 2rem;
+      max-width: 100%;
+    }
+
+    .install h2 {
+      width: max-content;
+      margin-right: 1rem;
+      text-wrap-style: balance;
+      line-height: 1;
+      color: var(--color-white);
+      background-color: var(--color-focus);
+      color: var(--color-white);
+      padding: 0.5rem 1rem;
+      border-radius: 1rem 1rem 0 0;
+    }
+
+    .install .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 100%;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+
+    .install .tab {
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      align-self: stretch;
+    }
+
+    .install code {
+      width: max-content;
+      max-width: 100%;
+      display: flex;
+      background-color: var(--color-accent);
+      color: var(--color-focus);
+      padding: 1rem 2rem;
+      border-radius: 0rem 1rem 1rem 1rem;
+      font-size: 1.5rem;
+      border: 0.25rem solid var(--color-focus);
+      overflow-x: auto;
+      text-wrap: nowrap;
+    }
+  </style>
+
+  <body>
+    <div class="hero">
+      <div class="logo">
+        <img src="/web/logo.png" alt="BashBrunch Logo" class="logo" />
+      </div>
+
+      <h1>
+        Bash<br>Brunch
+      </h1>
+    </div>
+
+    <div class="install">
+      <div class="container">
+        <div class="tab">
+          <h2>
+            Install with CURL
+          </h2>
+        </div>
+        
+        <code>
+          curl -fsSL https://bashbrunch.attaditya.space/install.sh | bash
+        </code>
+      </div>
+    </div>
+  </body>
+</html>
