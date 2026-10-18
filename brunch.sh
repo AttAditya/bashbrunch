@@ -68,13 +68,17 @@ run_shell() {
   echo "\n[[ shell: $1 ]]"
   add_chat "shell" "$1"
 
+  script_file=$(mktemp)
   output_file=$(mktemp)
-  eval "$1" 2>&1 | tee "$output_file"
-  exit_code=${PIPESTATUS[0]}
+
+  printf '%s\n' "$1" > "$script_file"
+  bash "$script_file" > "$output_file" 2>&1
+  exit_code=$?
 
   executed=$(cat "$output_file")
-  rm -f "$output_file"
+  rm -f "$script_file" "$output_file"
   
+  echo "$executed"
   add_chat "shell output" "$executed"
   echo "[[ shell complete (code $exit_code) ]]\n"
   add_chat "shell" "execution complete (code $exit_code)"
