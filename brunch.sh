@@ -145,6 +145,8 @@ while [ true ]; do
         provider_file="$brunch_root/providers/$provider.sh"
         echo "Provider changed to $provider."
       fi
+
+      echo ""
       skip_ai=1
       ;;
     "/m")
@@ -155,6 +157,8 @@ while [ true ]; do
         model=$(cat $brunch_root/models/$provider.txt)
         echo "Model changed to $model."
       fi
+      
+      echo ""
       skip_ai=1
       ;;
     "/q")
