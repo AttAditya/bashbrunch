@@ -10,7 +10,7 @@ echo "If you do not want to install it there, you have 10 seconds to quit."
 echo ""
 
 for i in {10..1}; do
-  printf "\rContinuing in $i seconds..."
+  printf "\rContinuing in $i seconds... "
   sleep 1
 done
 
