@@ -14,7 +14,7 @@ for i in {10..1}; do
   sleep 1
 done
 
-echo "\rContinuing with installation...\n"
+printf "\rContinuing with installation...\n"
 
 site="https://bashbrunch.attaditya.space"
 brunch_dir="$HOME/.bashbrunch"
