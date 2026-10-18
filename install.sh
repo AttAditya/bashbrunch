@@ -19,6 +19,11 @@ echo "Creating installation directory..."
 
 mkdir -p "$HOME/.bashbrunch"
 
+echo "Downloading information files..."
+
+curl -fsSL "$site/brunch.sh" > "$HOME/.bashbrunch/README.md"
+curl -fsSL "$site/version.txt" > "$HOME/.bashbrunch/LICENSE"
+
 echo "Downloading core files..."
 
 curl -fsSL "$site/brunch.sh" > "$HOME/.bashbrunch/brunch.sh"
