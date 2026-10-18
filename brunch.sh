@@ -28,6 +28,11 @@ echo "BashBrunch $(cat $brunch_root/version.txt)"
 echo "Use /? for help"
 echo ""
 
+echo "Session ID: $session_id"
+echo "Active Provider: $provider"
+echo "Active Model: $model"
+echo ""
+
 history -c
 history -r "$history_file"
 
@@ -138,7 +143,7 @@ while [ true ]; do
       ;;
     "/p")
       if [ -z "$content" ]; then
-        echo "Please provide a provider name."
+        echo "Active Provider: $provider"
       else
         echo "$content" > "$brunch_root/provider.txt"
         provider=$(cat $brunch_root/provider.txt)
@@ -151,7 +156,7 @@ while [ true ]; do
       ;;
     "/m")
       if [ -z "$content" ]; then
-        echo "Please provide a model name."
+        echo "Active Model: $model"
       else
         echo "$content" > "$brunch_root/models/$provider.txt"
         model=$(cat $brunch_root/models/$provider.txt)
