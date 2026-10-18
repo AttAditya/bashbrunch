@@ -147,6 +147,7 @@ run_ai() {
     case "$command" in
       "/close")
         requested_exit=1
+        break
         ;;
       "/pass")
         break
