@@ -1,7 +1,7 @@
 #!/bin/bash
 
 brunch_root="."
-session_id=$(echo "$(date +%s)-$RANDOM-$RANDOM")
+session_id="$(date +%s)-$RANDOM-$RANDOM"
 
 if [ -n "$BRUNCH_ROOT" ]; then
   brunch_root="$BRUNCH_ROOT"
@@ -32,24 +32,24 @@ latest_version=$(curl \
   -s https://bashbrunch.attaditya.space/version.txt
 )
 
-echo() {
+println() {
   printf "$@\n"
 }
 
 if [ "$version" != "$latest_version" ]; then
-  echo "A new version of BashBrunch is available: $latest_version"
-  echo "Please update your installation."
-  echo ""
+  println "A new version of BashBrunch is available: $latest_version"
+  println "Please update your installation."
+  println ""
 fi
 
-echo "BashBrunch $version"
-echo "Use /? for help"
-echo ""
+println "BashBrunch $version"
+println "Use /? for help"
+println ""
 
-echo "Session ID: $session_id"
-echo "Active Provider: $provider"
-echo "Active Model: $model"
-echo ""
+println "Session ID: $session_id"
+println "Active Provider: $provider"
+println "Active Model: $model"
+println ""
 
 history -c
 history -r "$history_file"
@@ -66,11 +66,11 @@ fi
 
 add_chat() {
   chat_history="${chat_history}$1: $2\n"
-  echo "$1: $2" >> "$session_file"
+  println "$1: $2" >> "$session_file"
 }
 
 run_shell() {
-  echo "\n[[ shell: $1 ]]"
+  println "\n[[ shell: $1 ]]"
   add_chat "shell" "$1"
 
   script_file=$(mktemp)
@@ -83,14 +83,14 @@ run_shell() {
   executed=$(cat "$output_file")
   rm -f "$script_file" "$output_file"
   
-  echo "$executed"
+  println "$executed"
   add_chat "shell output" "$executed"
-  echo "[[ shell complete (code $exit_code) ]]\n"
+  println "[[ shell complete (code $exit_code) ]]\n"
   add_chat "shell" "execution complete (code $exit_code)"
 }
 
 use_ai() {
-  buffer_pending=$(echo "$ai_buffer" | wc -w | xargs)
+  buffer_pending=$(println "$ai_buffer" | wc -w | xargs)
 
   if [ "$buffer_pending" -eq 0 ]; then
     ai_buffer=$(bash $provider_file "$model" \
@@ -101,9 +101,9 @@ use_ai() {
 }
 
 read_buffer() {
-  line_count=$(echo "$ai_buffer" | wc -l | xargs)
+  line_count=$(println "$ai_buffer" | wc -l | xargs)
   line_count=$((line_count))
-  checkpoint=$(echo "$ai_buffer\n/pass" \
+  checkpoint=$(println "$ai_buffer\n/pass" \
     | tail -n +2 \
     | grep -n '^/' \
     | grep -o '^[^:]*' \
@@ -114,20 +114,20 @@ read_buffer() {
     checkpoint=$line_count
   fi
 
-  ai_result=$(echo "$ai_buffer" | head -n $checkpoint)
-  ai_buffer=$(echo "$ai_buffer" | tail -n +$((checkpoint + 1)))
+  ai_result=$(println "$ai_buffer" | head -n $checkpoint)
+  ai_buffer=$(println "$ai_buffer" | tail -n +$((checkpoint + 1)))
 }
 
 get_command() {
-  first_line=$(echo "$1" | head -n 1)
-  command=$(echo "$first_line" | grep -o '^[^ ]*' | head -n 1)
-  echo "$command"
+  first_line=$(println "$1" | head -n 1)
+  command=$(println "$first_line" | grep -o '^[^ ]*' | head -n 1)
+  println "$command"
 }
 
 get_content() {
-  first_line=$(echo "$1" | head -n 1 | sed 's/^[^ ]* *//')
-  rest_lines=$(echo "$1" | tail -n +2)
-  echo "$first_line\n$rest_lines"
+  first_line=$(println "$1" | head -n 1 | sed 's/^[^ ]* *//')
+  rest_lines=$(println "$1" | tail -n +2)
+  println "$first_line\n$rest_lines"
 }
 
 run_ai() {
@@ -137,7 +137,7 @@ run_ai() {
 
     command=$(get_command "$ai_result")
     content=$(get_content "$ai_result")
-    command_type=$(echo "$command" \
+    command_type=$(println "$command" \
       | grep '^\/' \
       | wc -l \
       | xargs \
@@ -159,19 +159,19 @@ run_ai() {
         ;;
       "/msg")
         printf "$content"
-        echo "\n"
+        println "\n"
         ;;
       "/sh")
         run_shell "$content"
         ;;
       "/v")
         add_chat "system" $version
-        echo ""
+        println ""
         ;;
       *)
         add_chat "system" "Unknown command: $command"
-        echo "Unknown command: $command"
-        echo ""
+        println "Unknown command: $command"
+        println ""
         ;;
     esac
   done
@@ -185,7 +185,7 @@ while [ true ]; do
   read -ep ">>> " prompt
   history -s "$prompt"
   add_chat "user" "$prompt"
-  command_type=$(echo "$prompt" | grep '^\/' | wc -l | xargs)
+  command_type=$(println "$prompt" | grep '^\/' | wc -l | xargs)
 
   if [ "$prompt" = "" ]; then
     continue
@@ -196,49 +196,49 @@ while [ true ]; do
     continue
   fi
 
-  command=$(echo "$prompt" | grep -o '^[^ ]*')
-  content=$(echo "$prompt" | sed 's/^[^ ]* *//')
+  command=$(println "$prompt" | grep -o '^[^ ]*')
+  content=$(println "$prompt" | sed 's/^[^ ]* *//')
   skip_ai=0
   
   case "$command" in
     "/?")
       cat $help_file
-      echo ""
+      println ""
       skip_ai=1
       ;;
     "/v")
-      echo "BashBrunch $version"
-      echo ""
+      println "BashBrunch $version"
+      println ""
       skip_ai=1
       ;;
     "/p")
       if [ -z "$content" ]; then
-        echo "Active Provider: $provider"
+        println "Active Provider: $provider"
       else
-        echo "$content" > "$provider_select_file"
+        println "$content" > "$provider_select_file"
         
         provider=$(cat $provider_select_file)
         provider_file="$brunch_root/providers/$provider.sh"
         model_select_file="$config_dir/models/$provider.txt"
         model=$(cat $model_select_file)
         
-        echo "Provider changed to $provider."
-        echo "Active Model: $model"
+        println "Provider changed to $provider."
+        println "Active Model: $model"
       fi
 
-      echo ""
+      println ""
       skip_ai=1
       ;;
     "/m")
       if [ -z "$content" ]; then
-        echo "Active Model: $model"
+        println "Active Model: $model"
       else
-        echo "$content" > "$model_select_file"
+        println "$content" > "$model_select_file"
         model=$(cat $model_select_file)
-        echo "Model changed to $model."
+        println "Model changed to $model."
       fi
       
-      echo ""
+      println ""
       skip_ai=1
       ;;
     "/q")
@@ -249,7 +249,7 @@ while [ true ]; do
       skip_ai=1
       ;;
     *)
-      echo "Unknown command: $command"
+      println "Unknown command: $command"
       skip_ai=1
       ;;
   esac
@@ -260,11 +260,11 @@ while [ true ]; do
 done
 
 if [ $requested_exit -eq 1 ]; then
-  echo "Exiting! (session closed by AI)"
+  println "Exiting! (session closed by AI)"
 else
-  echo "Exiting!"
+  println "Exiting!"
 fi
 
 history -w "$history_file"
-echo "Session saved to $session_file"
+println "Session saved to $session_file"
 
