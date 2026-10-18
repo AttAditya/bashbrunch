@@ -58,6 +58,7 @@ prompt=""
 chat_history="${system_prompt}\n"
 ai_buffer=""
 ai_result=""
+requested_exit=0
 
 add_chat() {
   chat_history="${chat_history}$1: $2\n"
@@ -140,6 +141,9 @@ run_ai() {
     add_chat "assistant" "$ai_result"
     
     case "$command" in
+      "/close")
+        requested_exit=1
+        ;;
       "/pass")
         break
         ;;
@@ -164,6 +168,10 @@ run_ai() {
 }
 
 while [ true ]; do
+  if [ "$requested_exit" -eq 1 ]; then
+    break
+  fi
+
   read -ep ">>> " prompt
   history -s "$prompt"
   add_chat "user" "$prompt"
