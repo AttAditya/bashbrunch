@@ -9,9 +9,12 @@ echo "This script will install BashBrunch on $HOME/.bashbrunch\n"
 echo "If you do not want to install it there, you have 10 seconds to quit."
 echo ""
 
-sleep 10
+for i in {10..1}; do
+  printf "\rContinuing in $i seconds..."
+  sleep 1
+done
 
-echo "Continuing with installation...\n"
+echo "\rContinuing with installation...\n"
 
 site="https://bashbrunch.attaditya.space"
 brunch_dir="$HOME/.bashbrunch"
