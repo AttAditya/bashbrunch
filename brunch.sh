@@ -61,7 +61,7 @@ ai_result=""
 requested_exit=0
 
 if [ ! -f "$session_file" ]; then
-  touch "$session_file"
+  println "$system_prompt\n" > "$session_file"
 fi
 
 add_chat() {
