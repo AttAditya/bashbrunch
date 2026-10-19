@@ -1,1 +1,1 @@
-ollama run "$@" --hidethinking
+TERM=dumb ollama run "$@" --hidethinking
