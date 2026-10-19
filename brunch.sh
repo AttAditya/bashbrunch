@@ -52,7 +52,17 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
   exit 0
 fi
 
-if [ "$1" = "--session" ] || [ "$1" = "-s" ] || [ "$1" = "--resume" ] || [ "$1" = "-r" ]; then
+resuming=0
+
+if [ "$1" = "--session" ] || [ "$1" = "-s" ]; then
+  resuming=1
+fi
+
+if [ "$1" = "--resume" ] || [ "$1" = "-r" ]; then
+  resuming=1
+fi
+
+if [ "$resuming" -eq 1 ]; then
   if [ -z "$2" ]; then
     println "Please provide a session ID."
     exit 1
@@ -210,8 +220,7 @@ while [ true ]; do
   fi
 
   empty=""
-  printf ">$empty>$empty> "
-  read -ep "" prompt
+  read -ep ">$empty>$empty> " prompt
   history -s "$prompt"
   add_chat "user" "$prompt"
   command_type=$(println "$prompt" | grep '^\/' | wc -l | xargs)
