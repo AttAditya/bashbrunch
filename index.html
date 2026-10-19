@@ -1,36 +1,43 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>BashBrunch - A minimal terminal-based coding harness</title>
-    <meta name="description" content="A minimal terminal-based coding harness. In here, the AI assistant can access tools to help you do your work. It will be using bash directly and will be communicating with you through this interface.">
+<head>
+  <title>BashBrunch - A minimal terminal-based coding harness</title>
 
-    <meta property="og:url" content="">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="BashBrunch">
-    <meta property="og:description" content="A minimal terminal-based coding harness. In here, the AI assistant can access tools to help you do your work. It will be using bash directly and will be communicating with you through this interface.">
-    <meta property="og:image" content="/web/preview.png">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:domain" content="https://bashbrunch.attaditya.space/">
-    <meta property="twitter:url" content="">
-    <meta name="twitter:title" content="BashBrunch">
-    <meta name="twitter:description" content="A minimal terminal-based coding harness. In here, the AI assistant can access tools to help you do your work. It will be using bash directly and will be communicating with you through this interface.">
-    <meta name="twitter:image" content="/web/preview.png">
+  <title>BashBrunch - A minimal terminal-based coding harness</title>
+  <meta name="description"
+    content="A minimal terminal-based coding harness. In here, the AI assistant can access tools to help you do your work. It will be using bash directly and will be communicating with you through this interface.">
 
-    <link rel="icon" href="/web/logo.png" type="image/png" />
-  </head>
+  <meta property="og:url" content="">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="BashBrunch">
+  <meta property="og:description"
+    content="A minimal terminal-based coding harness. In here, the AI assistant can access tools to help you do your work. It will be using bash directly and will be communicating with you through this interface.">
+  <meta property="og:image" content="/web/preview.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="https://bashbrunch.attaditya.space/">
+  <meta property="twitter:url" content="">
+  <meta name="twitter:title" content="BashBrunch">
+  <meta name="twitter:description"
+    content="A minimal terminal-based coding harness. In here, the AI assistant can access tools to help you do your work. It will be using bash directly and will be communicating with you through this interface.">
+  <meta name="twitter:image" content="/web/preview.png">
+
+  <link rel="icon" href="/web/logo.png" type="image/png" />
 
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Fira+Code:wght@400;700&display=swap");
-
     :root {
       --color-focus: #E79F3D;
+      --color-prime: #FFE7A5;
       --color-hyped: #FFE8C9;
-      --color-accent: #FFE7A5;
+      --color-shade: #5C4033;
+      --color-shine: #FFF8E7;
+
       --color-white: #FFFFFF;
+      --color-black: #000000;
     }
 
     * {
@@ -38,99 +45,310 @@
       padding: 0;
       box-sizing: border-box;
       font-family: "JetBrains Mono", monospace;
+      cursor: default;
+    }
+
+    html {
+      background-color: var(--color-hyped);
     }
 
     body {
-      background-color: var(--color-hyped);
-      color: var(--color-focus);
+      background-color: var(--color-shine);
+      color: var(--color-shade);
+      line-height: 1.6;
+    }
+
+    nav {
+      --branding-size: 2.5rem;
+      position: sticky;
+      top: 0;
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      height: 100vh;
-      gap: 2rem;
-      padding-top: 6rem;
+      padding: 1rem 2rem;
+      background: var(--color-hyped);
+      border-bottom: 0.125rem solid var(--color-focus);
+    }
+
+    nav .logo {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: var(--color-focus);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1rem;
     }
 
     .hero {
+      text-align: center;
+      padding: 4rem 2rem 2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .hero p {
+      max-width: 25rem;
+      margin: 0 auto;
+      text-wrap-style: balance;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      color: var(--color-focus);
+      margin-bottom: 1rem;
+    }
+
+    .section {
+      max-width: 75rem;
+      margin: 0 auto;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.5rem;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(15.625rem, 1fr));
+      gap: 2rem;
+    }
+
+    .install {
+      max-width: 75rem;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
       width: 100%;
-      height: 50vmin;
+    }
+
+    h2 {
+      color: var(--color-focus);
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+    }
+
+    .install-command {
+      background: var(--color-white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      border: 0.125rem solid var(--color-focus);
+      box-shadow: 0.25rem 0.25rem 0 var(--color-focus);
+    }
+
+    .install-command input {
+      border: none;
+      background: transparent;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 1rem;
+      width: 100%;
+      outline: none;
+    }
+
+    a, button {
+      display: inline-block;
+      text-decoration: none;
+      color: var(--color-shade);
+      background: var(--color-white);
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      border: 0.125rem solid var(--color-focus);
+      box-shadow: 0.125rem 0.125rem 0 var(--color-focus);
+    }
+
+    a {
+      padding: 0.25rem 0.75rem;
+      font-size: 1rem;
+    }
+
+    a:hover, button:hover {
+      background-color: var(--color-prime);
+    }
+
+    a:active, button:active {
+      transform: translate(0.125rem, 0.125rem);
+      box-shadow: 0 0 0 var(--color-focus);
+    }
+
+    .card {
+      background: var(--color-hyped);
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      border: 0.125rem solid var(--color-prime);
+      box-shadow: 0.25rem 0.25rem 0 var(--color-focus);
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-0.3125rem);
+    }
+
+    .card h3 {
+      color: var(--color-focus);
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: var(--color-shade);
+      background: var(--color-hyped);
+      margin-top: 4rem;
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    }
+
+    footer .preview {
+      width: 100%;
+      height: auto;
+      border: 0.25rem solid var(--color-shade);
+      border-radius: 2rem;
+    }
+
+    footer .links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 0.5rem;
+    }
+
+    footer .links .spread {
+      flex-grow: 1;
+    }
+
+    footer .links .footer-cols {
+      display: flex;
+      gap: 2rem;
+      text-align: left;
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.5rem;
+      flex: 1;
+    }
+    
+    footer .links .col h4 {
+      color: var(--color-shade);
+      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+    }
+
+    .col ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.5rem;
+    }
+
+    .col ul li {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .hero {
+      --branding-size: 25vmin;
+    }
+
+    .branding {
+      width: 100%;
+      height: var(--branding-size);
       margin: 0 auto;
       text-align: center;
       display: flex;
       justify-content: center;
       align-items: center;
     }
-    
-    .hero h1 {
-      font-size: 12vmin;
+
+    .branding h1 {
+      font-size: calc(0.24 * var(--branding-size));
       font-weight: 900;
       text-align: left;
       line-height: 0.9;
       align-self: flex-end;
-      padding: 4vmin 0;
-      margin-left: -4vmin;
+      padding: calc(0.04 * var(--branding-size)) 0;
+      margin-left: calc(-0.08 * var(--branding-size));
     }
 
-    .hero .logo {
+    .branding .logo {
       height: 100%;
-    }
-
-    .install {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 4rem 2rem;
-      max-width: 100%;
-    }
-
-    .install h2 {
-      width: max-content;
-      margin-right: 1rem;
-      text-wrap-style: balance;
-      line-height: 1;
-      color: var(--color-white);
-      background-color: var(--color-focus);
-      color: var(--color-white);
-      padding: 0.5rem 1rem;
-      border-radius: 1rem 1rem 0 0;
-    }
-
-    .install .container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      max-width: 100%;
-      border-radius: 1rem;
-      overflow: hidden;
-    }
-
-    .install .tab {
-      display: flex;
-      justify-content: start;
-      align-items: center;
-      align-self: stretch;
-    }
-
-    .install code {
-      width: max-content;
-      max-width: 100%;
-      display: flex;
-      background-color: var(--color-accent);
-      color: var(--color-focus);
-      padding: 1rem 2rem;
-      border-radius: 0rem 1rem 1rem 1rem;
-      font-size: 1.5rem;
-      border: 0.25rem solid var(--color-focus);
-      overflow-x: auto;
-      text-wrap: nowrap;
     }
   </style>
 
-  <body>
-    <div class="hero">
+  <script>
+    async function copyTextToClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch (err) {
+        console.error('Failed to copy: ', err);
+      }
+
+      return false;
+    }
+
+    async function copyInstallCommand() {
+      const commandInput = document.querySelector('.install-command input');
+      const commandText = commandInput.value;
+
+      if (!await copyTextToClipboard(commandText)) {
+        alert('Failed to copy the command. Please copy it manually.');
+        return;
+      }
+
+      const copyButton = document.getElementById('copy-install-command');
+      copyButton.textContent = 'Copied!';
+      setTimeout(() => {
+        copyButton.textContent = 'Copy';
+      }, 2000);
+    }
+  </script>
+</head>
+
+<body>
+  <nav>
+    <div class="logo">
+      <div class="branding">
+        <div class="logo">
+          <img src="/web/logo.png" alt="BashBrunch Logo" class="logo" />
+        </div>
+
+        <h1>
+          Bash<br>Brunch
+        </h1>
+      </div>
+    </div>
+    <ul>
+      <li><a href="#install">Install</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="https://github.com/attaditya/bashbrunch" target="_blank" rel="noopener noreferrer">
+        GitHub
+      </a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <div class="branding">
       <div class="logo">
         <img src="/web/logo.png" alt="BashBrunch Logo" class="logo" />
       </div>
@@ -140,18 +358,71 @@
       </h1>
     </div>
 
+    <p>
+      A minimal terminal-based coding harness!
+      Powered completely by Bash and AI
+    </p>
+  </header>
+
+  <section id="install" class="section">
+    <h2>Installation</h2>
     <div class="install">
-      <div class="container">
-        <div class="tab">
-          <h2>
-            Install with CURL
-          </h2>
-        </div>
-        
-        <code>
-          curl -fsSL https://bashbrunch.attaditya.space/install.sh | bash
-        </code>
+      <p>To install BashBrunch, simply run the following command in your terminal:</p>
+      <div class="install-command">
+        <input onclick="this.select(); copyInstallCommand()"
+        value="curl -sSL https://bashbrunch.attaditya.space/install.sh | bash">
+        <button id="copy-install-command" onclick="copyInstallCommand()">Copy</button>
       </div>
     </div>
-  </body>
+  </section>
+
+  <section id="features" class="section">
+    <h2>Features</h2>
+
+    <div class="features">
+      <div class="card">
+        <h3>Direct Shell Access</h3>
+        <p>The AI assistant interacts directly with the bash shell, allowing for rapid file manipulation
+          and system commands.</p>
+      </div>
+      <div class="card">
+        <h3>Minimalist Design</h3>
+        <p>Focused on productivity. No bloated interfaces, just a clean stream of commands and results.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Control Passing</h3>
+        <p>A unique workflow where control seamlessly shifts between the user and the AI to ensure the
+          best outcome.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <img class="preview" src="/web/preview.png" alt="BashBrunch Preview">
+    <div class="links">
+      <div class="footer-cols">
+        <div class="col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="https://bashbrunch.attaditya.space/" target="_blank" rel="noopener noreferrer">Home Page</a></li>
+            <li><a href="https://github.com/attaditya/bashbrunch" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a href="https://github.com/attaditya/bashbrunch/issues" target="_blank" rel="noopener noreferrer">Report Issue</a></li>
+          </ul>
+        </div>
+
+        <div class="col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:bashbrunch@attaditya.space" target="_blank" rel="noopener noreferrer">Email</a></li>
+            <li><a href="https://attaditya.space/" target="_blank" rel="noopener noreferrer">AttAditya</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="spread"></div>
+      <p>&copy; 2026 BashBrunch - An AttAditya Project</p>
+    </div>
+  </footer>
+</body>
+
 </html>

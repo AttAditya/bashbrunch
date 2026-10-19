@@ -33,7 +33,7 @@ latest_version=$(curl \
 )
 
 println() {
-  printf "$@\n"
+  printf '%b\n' "$@"
 }
 
 if [ "$version" != "$latest_version" ]; then
@@ -103,7 +103,7 @@ requested_exit=0
 
 add_chat() {
   chat_history="${chat_history}$1: $2\n"
-  println "$1: $2" >> "$session_file"
+  printf '%b\n' "$1: $2\n" >> "$session_file"
 }
 
 run_shell() {
@@ -113,7 +113,7 @@ run_shell() {
   script_file=$(mktemp)
   output_file=$(mktemp)
 
-  printf '%s\n' "$1" > "$script_file"
+  printf '%b\n' "$1" > "$script_file"
   bash "$script_file" > "$output_file" 2>&1
   exit_code=$?
 

@@ -17,3 +17,5 @@ You also must need to use only commands or else that line will not be recognized
 
 Since you are given control of the harness, use it to your advantage. There can be consecutive assistant (your) turns, so feel free to use this but keep note that the user should not feel like they are being mimicked.
 
+You only have access to common bash commands in Unix-like systems. You can also use the "curl" command to make HTTP requests.
+

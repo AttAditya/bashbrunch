@@ -25,5 +25,26 @@ response=$(curl -s -X POST "http://localhost:11434/api/generate" \
 response=$(grep -o '"response": *"[^"]*"' <<< "$response" \
   | sed 's/"response": *"\(.*\)"/\1/')
 
+response=$(echo "$response" | sed '
+  s/\\u0026/\&/gi
+  s/\\u0028/(/gi
+  s/\\u0029/)/gi
+  s/\\u002a/*/gi
+  s/\\u002b/+/gi
+  s/\\u003b/;/gi
+  s/\\u003c/</gi
+  s/\\u003d/=/gi
+  s/\\u003e/>/gi
+  s/\\u005b/[/gi
+  s/\\u005c/\\/gi
+  s/\\u005d/]/gi
+  s/\\u005e/^/gi
+  s/\\u0060/`/gi
+  s/\\u007b/{/gi
+  s/\\u007c/|/gi
+  s/\\u007d/}/gi
+  s/\\u007e/~/gi
+')
+
 printf '%b\n' "$response"
 
