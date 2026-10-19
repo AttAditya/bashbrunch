@@ -85,24 +85,28 @@
 
     @media (max-width: 475px) {
       nav {
-        justify-content: center;
+        display: none;
       }
 
-      nav ul {
-        display: none;
+      .hero {
+        margin-top: 0 !important;
+        padding-top: 6rem !important;
       }
     }
 
     .hero {
       text-align: center;
-      padding: 4rem 2rem 2rem 2rem;
+      padding: 4rem 2rem 0rem 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 1rem;
+      position: relative;
     }
 
     .hero p {
+      position: relative;
+      z-index: 10;
       max-width: 25rem;
       margin: 0 auto;
       text-wrap-style: balance;
@@ -293,9 +297,68 @@
 
     .hero {
       --branding-size: 25vmin;
+      margin: calc(0.4 * var(--branding-size)) 0;
+    }
+
+    .hero-puppets {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    @keyframes float {
+      0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+
+      50% {
+        transform: translate(-50%, -60%) rotate(5deg);
+      }
+
+      100% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+    }
+
+    .puppet {
+      position: absolute;
+      width: calc(0.75 * var(--branding-size));
+      height: auto;
+      animation: float 3s ease-in-out infinite;
+      transition: none;
+      transform: translate(-50%, -50%);
+      filter:
+        drop-shadow(0.125rem 0.125rem 0 var(--color-focus)) drop-shadow(-0.125rem 0.125rem 0 var(--color-focus)) drop-shadow(0.125rem -0.125rem 0 var(--color-focus)) drop-shadow(-0.125rem -0.125rem 0 var(--color-focus)) drop-shadow(0.125rem 0 0 var(--color-focus)) drop-shadow(-0.125rem 0 0 var(--color-focus)) drop-shadow(0 0.125rem 0 var(--color-focus)) drop-shadow(0 -0.125rem 0 var(--color-focus));
+    }
+
+    .puppet:nth-child(1) {
+      left: -46vmin;
+      top: -20vmin;
+      animation-delay: 0s;
+    }
+
+    .puppet:nth-child(2) {
+      left: 36vmin;
+      top: -15vmin;
+      animation-delay: 0.5s;
+    }
+
+    .puppet:nth-child(3) {
+      left: -42vmin;
+      top: 17vmin;
+      animation-delay: 1s;
+    }
+
+    .puppet:nth-child(4) {
+      left: 40vmin;
+      top: 20vmin;
+      animation-delay: 1.5s;
     }
 
     .branding {
+      position: relative;
+      z-index: 10;
       width: 100%;
       height: var(--branding-size);
       margin: 0 auto;
@@ -381,6 +444,13 @@
       <h1>
         Bash<br>Brunch
       </h1>
+    </div>
+
+    <div class="hero-puppets">
+      <img src="/web/brunch1.png" alt="BashBrunch Puppet 1" class="puppet" />
+      <img src="/web/brunch2.png" alt="BashBrunch Puppet 2" class="puppet" />
+      <img src="/web/brunch3.png" alt="BashBrunch Puppet 3" class="puppet" />
+      <img src="/web/brunch4.png" alt="BashBrunch Puppet 4" class="puppet" />
     </div>
 
     <p>
