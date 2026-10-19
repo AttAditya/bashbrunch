@@ -42,6 +42,33 @@ if [ "$version" != "$latest_version" ]; then
   println ""
 fi
 
+if [ "$1" = "--version" ] || [ "$1" = "-v" ]; then
+  println "BashBrunch $version"
+  exit 0
+fi
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+  cat $help_file
+  exit 0
+fi
+
+if [ "$1" = "--session" ] || [ "$1" = "-s" ] || [ "$1" = "--resume" ] || [ "$1" = "-r" ]; then
+  if [ -z "$2" ]; then
+    println "Please provide a session ID."
+    exit 1
+  fi
+
+  session_id="$2"
+  session_file="$data_dir/sessions/$session_id.txt"
+
+  if [ ! -f "$session_file" ]; then
+    println "Session ID $session_id does not exist."
+    exit 1
+  fi
+
+  println "Resuming session $session_id"
+fi
+
 println "BashBrunch $version"
 println "Use /? for help"
 println ""
@@ -54,15 +81,15 @@ println ""
 history -c
 history -r "$history_file"
 
-prompt=""
-chat_history="${system_prompt}\n"
-ai_buffer=""
-ai_result=""
-requested_exit=0
-
 if [ ! -f "$session_file" ]; then
   println "$system_prompt\n" > "$session_file"
 fi
+
+prompt=""
+chat_history="$(cat "$session_file")"
+ai_buffer=""
+ai_result=""
+requested_exit=0
 
 add_chat() {
   chat_history="${chat_history}$1: $2\n"
