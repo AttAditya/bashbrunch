@@ -1,3 +1,5 @@
+#!/bin/bash
+
 response=$(ollama run "$@" --hidethinking | cat)
 contents=""
 

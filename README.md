@@ -156,6 +156,7 @@ Find the provider scripts in `providers/` folder in the installation directory (
 
 - `unset` - Placeholder when no provider is configured
 - `ollama` - Local models via Ollama
+- `ollama-curl` - Local models via Ollama using curl
 
 ### Custom Providers
 
