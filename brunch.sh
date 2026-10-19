@@ -209,7 +209,9 @@ while [ true ]; do
     break
   fi
 
-  read -ep ">>> " prompt
+  empty=""
+  printf ">$empty>$empty> "
+  read -ep "" prompt
   history -s "$prompt"
   add_chat "user" "$prompt"
   command_type=$(println "$prompt" | grep '^\/' | wc -l | xargs)
