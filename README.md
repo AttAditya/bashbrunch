@@ -168,6 +168,14 @@ Find the provider scripts in `providers/` folder in the installation directory (
 
 Models are completely dependent on the provider. BashBrunch does not provide any models, but allows you to use any model that your provider supports. Selected model is stored in `~/.bashbrunch/models/<provider>.txt`. Change it with `/m <model>` command.
 
+## Flags
+
+| Flag | Description | Alias |
+|------|-------------|-------|
+| `--version` | Show version | `-v` |
+| `--help` | Show help | `-h` |
+| `--session <session_id>` | Resume a previous session | `--resume`, `-s`, `-r` |
+
 ## Environment Variables
 
 | Variable | Description | Default |
@@ -181,5 +189,5 @@ Models are completely dependent on the provider. BashBrunch does not provide any
 
 ---
 
-> Made with <3 by [AttAditya](https://attaditya.space)
+> _Made with <3 by [AttAditya](https://attaditya.space)_
 
