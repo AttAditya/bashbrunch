@@ -59,38 +59,51 @@
     }
 
     nav {
-      --branding-size: 2.5rem;
       position: sticky;
-      z-index: 1000;
       top: 0;
+      z-index: 1000;
+      padding: 1rem 6rem;
+    }
+
+    .nav {
+      --branding-size: 2.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
+      padding: 0.5rem 0.75rem;
       background: var(--color-hyped);
-      border-bottom: 0.125rem solid var(--color-focus);
+      border: 0.125rem solid var(--color-focus);
+      border-radius: 1rem;
+      font-size: 0.75rem !important;
+      box-shadow: 0.25rem 0.25rem 0 var(--color-focus);
+      transform: translateY(0.5rem);
     }
 
-    nav .logo {
+    .nav .logo {
       font-weight: bold;
       font-size: 1.2rem;
       color: var(--color-focus);
     }
 
-    nav ul {
+    .nav ul {
       display: flex;
       list-style: none;
       gap: 1rem;
     }
 
-    @media (max-width: 475px) {
-      nav {
+    @media (max-width: 625px) {
+      .nav {
         display: none;
       }
 
       .hero {
         margin-top: 0 !important;
         padding-top: 6rem !important;
+      }
+
+      button,
+      a {
+        text-align: center !important;
       }
     }
 
@@ -130,7 +143,7 @@
 
     .features {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(15.625rem, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
       gap: 2rem;
     }
 
@@ -263,7 +276,7 @@
       display: grid;
       gap: 2rem;
       text-align: left;
-      grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
     }
 
     .col {
@@ -321,15 +334,19 @@
       }
     }
 
+    .outlined {
+      filter:
+        drop-shadow(var(--outline-stroke) var(--outline-stroke) 0 var(--color-focus)) drop-shadow(calc(-1 * var(--outline-stroke)) var(--outline-stroke) 0 var(--color-focus)) drop-shadow(var(--outline-stroke) calc(-1 * var(--outline-stroke)) 0 var(--color-focus)) drop-shadow(calc(-1 * var(--outline-stroke)) calc(-1 * var(--outline-stroke)) 0 var(--color-focus)) drop-shadow(var(--outline-stroke) 0 0 var(--color-focus)) drop-shadow(calc(-1 * var(--outline-stroke)) 0 0 var(--color-focus)) drop-shadow(0 var(--outline-stroke) 0 var(--color-focus)) drop-shadow(0 calc(-1 * var(--outline-stroke)) 0 var(--color-focus));
+    }
+
     .puppet {
+      --outline-stroke: 0.125rem;
       position: absolute;
       width: calc(0.75 * var(--branding-size));
       height: auto;
       animation: float 3s ease-in-out infinite;
       transition: none;
       transform: translate(-50%, -50%);
-      filter:
-        drop-shadow(0.125rem 0.125rem 0 var(--color-focus)) drop-shadow(-0.125rem 0.125rem 0 var(--color-focus)) drop-shadow(0.125rem -0.125rem 0 var(--color-focus)) drop-shadow(-0.125rem -0.125rem 0 var(--color-focus)) drop-shadow(0.125rem 0 0 var(--color-focus)) drop-shadow(-0.125rem 0 0 var(--color-focus)) drop-shadow(0 0.125rem 0 var(--color-focus)) drop-shadow(0 -0.125rem 0 var(--color-focus));
     }
 
     .puppet:nth-child(1) {
@@ -381,6 +398,89 @@
     .branding .logo {
       height: 100%;
     }
+
+    .brunch-avatars {
+      flex: 1;
+      display: flex;
+      gap: 0.5rem;
+      justify-content: space-evenly;
+      height: 2rem;
+    }
+
+    @keyframes brunch-avatar-float {
+      0% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-0.25rem);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    .brunch-avatar {
+      --outline-stroke: 0.0625rem;
+      height: 100%;
+      width: auto;
+      top: 50%;
+      animation: brunch-avatar-float 1.5s ease-in-out infinite;
+      transition: scale 0.2s ease-in-out;
+      scale: 1;
+      cursor: pointer;
+    }
+
+    .brunch-avatar:hover {
+      scale: 2;
+    }
+
+    .brunch-avatar:nth-child(1) {
+      animation-delay: -1.5s;
+    }
+
+    .brunch-avatar:nth-child(2) {
+      animation-delay: -1s;
+    }
+
+    .brunch-avatar:nth-child(3) {
+      animation-delay: -0.5s;
+    }
+
+    .brunch-avatar:nth-child(4) {
+      animation-delay: 0s;
+    }
+
+    @media (max-width: 840px) {
+      .brunch-avatars {
+        display: grid;
+        grid-template-columns: 0.875rem 0.875rem;
+        grid-template-rows: 0.875rem 0.875rem;
+        gap: 0.25rem;
+        justify-content: center;
+      }
+
+      .brunch-avatar {
+        --outline-stroke: 0.03125rem;
+      }
+    }
+
+    @media (max-width: 660px) {
+      .brunch-avatars {
+        display: none;
+      }
+    }
+
+    .rain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
   </style>
 
   <script>
@@ -410,33 +510,99 @@
         copyButton.textContent = 'Copy';
       }, 2000);
     }
+
+    function createRainDrop(imageUrl) {
+      const rainContainer = document.getElementById('rain');
+      const drop = document.createElement('img');
+      drop.src = imageUrl;
+      drop.className = 'rain-drop';
+      drop.style.position = 'absolute';
+      drop.style.left = `${Math.random() * window.innerWidth}px`;
+      drop.style.top = `-${Math.random() * 100}px`;
+      drop.style.width = '30px';
+      drop.style.height = '30px';
+      drop.style.opacity = Math.random();
+      rainContainer.appendChild(drop);
+
+      const fallDuration = Math.random() * 3 + 2;
+      drop.animate(
+        [
+          { transform: `translateY(0)` },
+          { transform: `translateY(${window.innerHeight + 50}px)` }
+        ],
+        {
+          duration: fallDuration * 1000,
+          iterations: Infinity,
+          easing: 'linear'
+        }
+      );
+
+      setTimeout(() => {
+        rainContainer.removeChild(drop);
+      }, fallDuration * 1000);
+    }
+
+    function startRain(imageUrl) {
+      const interval = setInterval(() => {
+        createRainDrop(imageUrl);
+      }, 200);
+
+      setTimeout(() => {
+        clearInterval(interval);
+      }, 5000);
+    }
+
+    function mixedRain() {
+      const images = [
+        '/web/brunch1.png',
+        '/web/brunch2.png',
+        '/web/brunch3.png',
+        '/web/brunch4.png'
+      ];
+
+      for (const image of images) {
+        startRain(image);
+      }
+    }
   </script>
 </head>
 
 <body>
-  <nav>
-    <div class="logo">
-      <div class="branding">
-        <div class="logo">
-          <img src="/web/logo.png" alt="BashBrunch Logo" class="logo" />
-        </div>
+  <div class="rain" id="rain"></div>
 
-        <h1>
-          Bash<br>Brunch
-        </h1>
+  <nav>
+    <div class="nav">
+      <div class="logo">
+        <div class="branding">
+          <div class="logo">
+            <img src="/web/logo.png" alt="BashBrunch Logo" class="logo" />
+          </div>
+
+          <h1>
+            Bash<br>Brunch
+          </h1>
+        </div>
       </div>
+
+      <div class="brunch-avatars">
+        <img src="/web/brunch1.png" alt="Brunch 1" class="brunch-avatar outlined" onclick="startRain(this.src);" />
+        <img src="/web/brunch2.png" alt="Brunch 2" class="brunch-avatar outlined" onclick="startRain(this.src);" />
+        <img src="/web/brunch3.png" alt="Brunch 3" class="brunch-avatar outlined" onclick="startRain(this.src);" />
+        <img src="/web/brunch4.png" alt="Brunch 4" class="brunch-avatar outlined" onclick="startRain(this.src);" />
+      </div>
+
+      <ul>
+        <li><a href="#install">Install</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="https://github.com/attaditya/bashbrunch" target="_blank" rel="noopener noreferrer">
+            GitHub
+          </a></li>
+      </ul>
     </div>
-    <ul>
-      <li><a href="#install">Install</a></li>
-      <li><a href="#features">Features</a></li>
-      <li><a href="https://github.com/attaditya/bashbrunch" target="_blank" rel="noopener noreferrer">
-          GitHub
-        </a></li>
-    </ul>
   </nav>
 
   <header class="hero">
-    <div class="branding">
+    <div class="branding" onclick="mixedRain();">
       <div class="logo">
         <img src="/web/logo.png" alt="BashBrunch Logo" class="logo" />
       </div>
@@ -446,11 +612,11 @@
       </h1>
     </div>
 
-    <div class="hero-puppets">
-      <img src="/web/brunch1.png" alt="BashBrunch Puppet 1" class="puppet" />
-      <img src="/web/brunch2.png" alt="BashBrunch Puppet 2" class="puppet" />
-      <img src="/web/brunch3.png" alt="BashBrunch Puppet 3" class="puppet" />
-      <img src="/web/brunch4.png" alt="BashBrunch Puppet 4" class="puppet" />
+    <div class="hero-puppets" onclick="mixedRain();">
+      <img src="/web/brunch1.png" alt="BashBrunch Puppet 1" class="puppet outlined" />
+      <img src="/web/brunch2.png" alt="BashBrunch Puppet 2" class="puppet outlined" />
+      <img src="/web/brunch3.png" alt="BashBrunch Puppet 3" class="puppet outlined" />
+      <img src="/web/brunch4.png" alt="BashBrunch Puppet 4" class="puppet outlined" />
     </div>
 
     <p>
