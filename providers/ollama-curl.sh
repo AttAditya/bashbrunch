@@ -11,19 +11,27 @@ fi
 
 model=$1
 prompt=$2
-prompt=${prompt//\\/\\\\}
-prompt=${prompt//\"/\\\"}
-prompt=${prompt//$'\n'/\\n}
-prompt=${prompt//$'\r'/\\r}
-prompt=${prompt//$'\t'/\\t}
 
-response=$(curl -s -X POST "http://localhost:11434/api/generate" \
+response=$(curl -fsS http://localhost:11434/api/generate \
   -H "Content-Type: application/json" \
-  -d "{\"prompt\": \"$prompt\", \"model\": \"$model\", \"stream\": false}"
+  -d "$(jq -n \
+    --arg model "$model" \
+    --arg prompt "$prompt" \
+    '{model: $model, prompt: $prompt, stream: false}')"
 )
 
-response=$(grep -o '"response": *"[^"]*"' <<< "$response" \
-  | sed 's/"response": *"\(.*\)"/\1/')
+error=$(jq -r '.error' <<< "$response")
+
+if ! [ $error = "null" ]; then
+  error_message=$(jq -r '.error' <<< "$response")
+
+  echo "/msg Ollama error: $error_message"
+  echo "/pass"
+
+  exit 0
+fi
+
+response=$(jq -r '.response' <<< "$response")
 
 response=$(echo "$response" | sed '
   s/\\u0026/\&/gi
