@@ -5,7 +5,9 @@ set -e
 echo "BashBrunch Installer Script"
 echo ""
 
-echo "This script will install BashBrunch on $HOME/.bashbrunch\n"
+echo "This script will install BashBrunch on $HOME/.bashbrunch"
+echo ""
+
 echo "If you do not want to install it there, you have 10 seconds to quit."
 echo ""
 
@@ -78,7 +80,9 @@ echo "Setting up data files..."
 
 touch "$brunch_dir/data/history.txt"
 
-echo "Installation complete!\n"
+echo "Installation complete!"
+echo ""
+
 echo "Adding execute permissions scripts..."
 
 chmod +x "$brunch_dir/brunch.sh"
