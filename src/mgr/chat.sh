@@ -1,3 +1,5 @@
+session_file="$session_dir/$session_id.txt"
+
 history -c
 history -r "$history_file"
 
