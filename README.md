@@ -1,4 +1,4 @@
-# ![BashBrunch](https://bashbrunch.attaditya.space/web/preview.png)
+# ![BashBrunch](https://bashbrunch.attaditya.space/preview.png)
 
 Welcome to BashBrunch! A minimal terminal-based coding harness. In here, the AI assistant can access tools to help you do your work. It will be using bash directly and will be communicating with you through this interface.
 
