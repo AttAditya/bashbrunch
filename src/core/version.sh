@@ -1,6 +1,6 @@
 version=$(cat $version_file)
 latest_version=$(curl \
-  -s https://bashbrunch.attaditya.space/version.txt
+  -s https://bashbrunch.attaditya.space/bashbrunch/version.txt
 )
 
 if [ "$version" != "$latest_version" ]; then
