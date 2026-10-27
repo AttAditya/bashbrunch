@@ -6,7 +6,7 @@ Welcome to BashBrunch! A minimal terminal-based coding harness. In here, the AI 
 
 ```bash
 # install with
-curl -fsSL https://bashbrunch.attaditya.space/install.sh | bash
+curl -fsSL https://bashbrunch.attaditya.space/install | bash
 
 # and to use it, just run
 brunch
