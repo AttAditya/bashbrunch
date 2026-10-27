@@ -48,7 +48,7 @@ user_loop() {
         
         provider=$(cat $provider_select_file)
         provider_file="$brunch_root/providers/$provider.sh"
-        model_select_file="$config_dir/models/$provider.txt"
+        model_select_file="$data_dir/models/$provider.txt"
         model=$(cat $model_select_file)
         
         println "Provider changed to $provider."
