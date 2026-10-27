@@ -45,22 +45,42 @@ ai_loop() {
   add_chat "assistant" "$ai_result"
   
   case "$command" in
-    "/close")
-      request_exit
+    "/v")
+      add_chat "system" $version
+      println ""
       ;;
-    "/pass")
-      pass_control
+    "/sh")
+      run_shell "$content"
       ;;
     "/msg")
       printf "$content"
       println "\n"
       ;;
-    "/sh")
-      run_shell "$content"
-      ;;
-    "/v")
-      add_chat "system" $version
+    "/sh2a")
+      add_chat "system" "Command in development: /sh2a"
+      println "Command in development: /sh2a"
       println ""
+      ;;
+    "/sh2r")
+      add_chat "system" "Command in development: /sh2r"
+      println "Command in development: /sh2r"
+      println ""
+      ;;
+    "/sh2x")
+      add_chat "system" "Command in development: /sh2x"
+      println "Command in development: /sh2x"
+      println ""
+      ;;
+    "/sh2c")
+      add_chat "system" "Command in development: /sh2c"
+      println "Command in development: /sh2c"
+      println ""
+      ;;
+    "/pass")
+      pass_control
+      ;;
+    "/exit")
+      request_exit
       ;;
     *)
       add_chat "system" "Unknown command: $command"
