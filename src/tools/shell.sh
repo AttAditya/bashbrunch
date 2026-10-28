@@ -1,11 +1,5 @@
-get_shell_name() {
-  local timestamp=$(date +%s)
-  local random_string="$RANDOM-$RANDOM"
-  echo "${timestamp}_${random_string}"
-}
-
 run_shell() {
-  local shell_name=$(get_shell_name)
+  local shell_name=$(get_temp_name)
   local shells_dir="$session_dir/shells"
 
   if [ ! -d "$shells_dir" ]; then
