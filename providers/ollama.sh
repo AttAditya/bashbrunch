@@ -1,6 +1,9 @@
 #!/bin/bash
 
-response=$(ollama run "$@" --hidethinking | cat)
+model=$2
+prompt=$3
+
+response=$(ollama run "$model" "$prompt" --hidethinking | cat)
 contents=""
 
 while IFS= read -r line; do

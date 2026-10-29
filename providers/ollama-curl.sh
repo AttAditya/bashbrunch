@@ -9,8 +9,8 @@ if [ "$ollama_check" -eq 0 ]; then
   exit 0
 fi
 
-model=$1
-prompt=$2
+model=$2
+prompt=$3
 
 response=$(curl -fsS http://localhost:11434/api/generate \
   -H "Content-Type: application/json" \

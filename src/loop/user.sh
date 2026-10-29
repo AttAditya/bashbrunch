@@ -48,6 +48,10 @@ user_loop() {
         
         provider=$(cat $provider_select_file)
         provider_file="$brunch_root/providers/$provider.sh"
+        
+        api_key_file="$data_dir/keys/$provider.txt"
+        api_key=$(cat $api_key_file)
+
         model_select_file="$data_dir/models/$provider.txt"
         model=$(cat $model_select_file)
         
@@ -55,6 +59,21 @@ user_loop() {
         println "Active Model: $model"
       fi
 
+      println ""
+      ;;
+    "/k")
+      if [ -z "$content" ]; then
+        if [ -z "$api_key" ]; then
+          println "No API Key set for $provider."
+        else
+          println "API Key exists for $provider."
+        fi
+      else
+        println "$content" > "$api_key_file"
+        api_key=$(cat $api_key_file)
+        println "API Key changed."
+      fi
+      
       println ""
       ;;
     "/m")

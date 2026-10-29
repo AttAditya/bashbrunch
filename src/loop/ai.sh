@@ -5,9 +5,10 @@ get_ai_input() {
   buffer_pending=$(println "$ai_buffer" | wc -w | xargs)
 
   if [ "$buffer_pending" -eq 0 ]; then
-    ai_buffer=$(bash $provider_file "$model" \
-      "$system_prompt
-      $chat_history" \
+    ai_buffer=$(bash $provider_file \
+      "$api_key" \
+      "$model" \
+      "$chat_history"
     )
   fi
 }
