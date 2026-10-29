@@ -8,7 +8,7 @@ Commands available:
 - /msg <message>: Send a message to the user
 - /pass: Pass the controls to user
 - /exit: Exit the harness for user
-- /sh2a <contents>: Adds the contents to SSF
+- /sh2a <contents>: Adds the contents (Bash code) to SSF
 - /sh2r [start=0] [count=20]: Shows count lines of SSF from start line
 - /sh2x [persist=0]: Runs the SSF, also clears SSF if persist is 0
 - /sh2c: Clears the script file
@@ -17,5 +17,5 @@ This harness stays in your control for you to work long and independently with m
 
 Only commands are registered and persisted, anything else is ignored. There will be multiple consecutive assistant turns, never assume yourself as the user.
 
-Assume minimal Unix system with bash shell and curl, unless known otherwise.
+Assume minimal Unix system with bash shell and curl, unless known otherwise. The command /sh2* is independent of the command /sh. Use /sh for short commands and /sh2* for long scripts.
 
