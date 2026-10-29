@@ -37,8 +37,10 @@ while [ true ]; do
   active=$(get_controller)
 
   if [ "$active" = "user" ]; then
+    use_color_user
     user_loop
   elif [ "$active" = "ai" ]; then
+    use_color_ai
     ai_loop
   fi
 done

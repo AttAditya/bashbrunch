@@ -17,19 +17,23 @@ run_shell() {
     cmd_preview="${cmd_preview}..."
   fi
 
+  use_color_tool
   println "\n[["
   println "  shell: ${script_file}"
   println "  command: ${cmd_preview}"
   println "]]"
   add_chat "shell" "$1"
 
+  use_color_tool
   printf '%b\n' "$1" > "$script_file"
   bash "$script_file" > "$output_file" 2>&1
 
+  use_color_shell
   exit_code=$?
   executed=$(cat "$output_file")
-
   println "${executed}"
+
+  use_color_tool
   println "\n[["
   println "  shell complete"
   println "  output: ${output_file}"
