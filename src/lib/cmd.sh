@@ -1,7 +1,3 @@
-println() {
-  printf '%b\n' "$@"
-}
-
 get_command() {
   first_line=$(println "$1" | head -n 1)
   command=$(println "$first_line" | grep -o '^[^ ]*' | head -n 1)
@@ -23,11 +19,5 @@ is_cmd_type() {
   else
     echo 1
   fi
-}
-
-get_temp_name() {
-  local timestamp=$(date +%s)
-  local random_string="$RANDOM-$RANDOM"
-  echo "${timestamp}_${random_string}"
 }
 

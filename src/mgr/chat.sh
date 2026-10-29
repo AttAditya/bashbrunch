@@ -26,6 +26,7 @@ add_chat() {
 
 post_session() {
   history -w "$history_file"
+  use_color_reset
   println "\n\n(Session saved)"
   println "Resume with: brunch --resume $session_id"
 }
