@@ -45,22 +45,37 @@ ai_loop() {
   add_chat "assistant" "$ai_result"
   
   case "$command" in
-    "/close")
-      request_exit
+    "/v")
+      add_chat "system" $version
+      println ""
       ;;
-    "/pass")
-      pass_control
+    "/sh")
+      run_shell "$content"
       ;;
     "/msg")
       printf "$content"
       println "\n"
       ;;
-    "/sh")
-      run_shell "$content"
+    "/sh2a")
+      ssf_append "$content"
+      println "[[ SSF Appended ]]"
       ;;
-    "/v")
-      add_chat "system" $version
-      println ""
+    "/sh2r")
+      ssf_read "$content"
+      println "[[ SSF Read ]]"
+      ;;
+    "/sh2x")
+      ssf_execute "$content"
+      ;;
+    "/sh2c")
+      ssf_clear
+      println "[[ SSF Cleared ]]"
+      ;;
+    "/pass")
+      pass_control
+      ;;
+    "/exit")
+      request_exit
       ;;
     *)
       add_chat "system" "Unknown command: $command"

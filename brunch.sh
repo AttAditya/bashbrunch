@@ -8,12 +8,13 @@ if [ -n "$BRUNCH_ROOT" ]; then
 fi
 
 source "$brunch_root/src/utils.sh"
-source "$brunch_root/src/tools.sh"
 source "$brunch_root/src/core/paths.sh"
 source "$brunch_root/src/core/version.sh"
 source "$brunch_root/src/core/arguments.sh"
 source "$brunch_root/src/mgr/chat.sh"
 source "$brunch_root/src/mgr/control.sh"
+source "$brunch_root/src/tool/shell.sh"
+source "$brunch_root/src/tool/ssf.sh"
 source "$brunch_root/src/loop/ai.sh"
 source "$brunch_root/src/loop/user.sh"
 

@@ -15,11 +15,6 @@ while IFS= read -r line; do
   )
 
   if [ "$flagged" -eq 0 ]; then
-    line=$(echo "$line" \
-      | sed 's/\ *$//' \
-      | sed 's/^\ *//'
-    )
-    
     contents="${contents}${line}\n"
     continue
   fi

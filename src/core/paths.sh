@@ -2,7 +2,7 @@ version_file="$brunch_root/version.txt"
 
 data_dir="$brunch_root/data"
 config_dir="$brunch_root/config"
-session_dir="$data_dir/sessions"
+sessions_dir="$data_dir/sessions"
 
 history_file="$data_dir/history.txt"
 provider_select_file="$data_dir/provider.txt"
