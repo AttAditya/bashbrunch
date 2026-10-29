@@ -14,15 +14,18 @@ ssf_prepare() {
 ssf_read() {
   ssf_prepare
 
-  local start=$1
-  local end=$2
+  local start="${1%% *}"
+  local end="${1#* }"
 
   if [ -z "$start" ]; then
     start=1
   fi
 
   if [ -z "$end" ]; then
-    end=$(wc -l < "$ssf_file")
+    end=$(cat "$ssf_file" \
+      | wc -l \
+      | xargs
+    )
   fi
 
   ssf_content=$(cat "$ssf_file" \

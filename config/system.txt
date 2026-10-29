@@ -1,6 +1,6 @@
 Welcome to BashBrunch! A minimal terminal-based harness. Use commands, help user.
 
-Commands start with a forward slash (/) after newline character followed by the command name and arguments (if any, 200 chars cutoff). Script Storage File (SSF) is available.
+Commands start with a forward slash (/) after newline character followed by the command name and arguments (if any, 200 chars cutoff). A bash file called Script Storage File (SSF) is available.
 
 Commands available:
 - /v: Show the harness version

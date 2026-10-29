@@ -57,24 +57,19 @@ ai_loop() {
       println "\n"
       ;;
     "/sh2a")
-      add_chat "system" "Command in development: /sh2a"
-      println "Command in development: /sh2a"
-      println ""
+      ssf_append "$content"
+      println "[[ SSF Appended ]]"
       ;;
     "/sh2r")
-      add_chat "system" "Command in development: /sh2r"
-      println "Command in development: /sh2r"
-      println ""
+      ssf_read "$content"
+      println "[[ SSF Read ]]"
       ;;
     "/sh2x")
-      add_chat "system" "Command in development: /sh2x"
-      println "Command in development: /sh2x"
-      println ""
+      ssf_execute "$content"
       ;;
     "/sh2c")
-      add_chat "system" "Command in development: /sh2c"
-      println "Command in development: /sh2c"
-      println ""
+      ssf_clear
+      println "[[ SSF Cleared ]]"
       ;;
     "/pass")
       pass_control
