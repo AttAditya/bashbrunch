@@ -25,8 +25,14 @@ add_chat() {
 }
 
 post_session() {
-  history -w "$history_file"
   use_color_reset
+
+  if [ "$incognito" -ne 0 ]; then
+    rm -rf "$session_dir"
+    return 0
+  fi
+
+  history -w "$history_file"
   println "\n\n(Session saved)"
   println "Resume with: brunch --resume $session_id"
 }
