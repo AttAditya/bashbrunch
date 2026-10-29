@@ -7,7 +7,9 @@ if [ -n "$BRUNCH_ROOT" ]; then
   brunch_root="$BRUNCH_ROOT"
 fi
 
-source "$brunch_root/src/utils.sh"
+source "$brunch_root/src/lib/colors.sh"
+source "$brunch_root/src/lib/utils.sh"
+source "$brunch_root/src/lib/cmd.sh"
 source "$brunch_root/src/core/paths.sh"
 source "$brunch_root/src/core/version.sh"
 source "$brunch_root/src/core/arguments.sh"
