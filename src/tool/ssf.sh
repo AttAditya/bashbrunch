@@ -14,23 +14,28 @@ ssf_prepare() {
 ssf_read() {
   ssf_prepare
 
-  local start="${1%% *}"
-  local end="${1#* }"
+  local start=$(echo "$1" \
+    | grep -o "^[^ ]*" \
+    | grep -o "[0-9]*"
+  )
+
+  local count=$(echo "$1" \
+    | grep -o "^[^ ]*\ [^ ]*" \
+    | grep -o "[^ ]*$" \
+    | grep -o "[0-9]*"
+  )
 
   if [ -z "$start" ]; then
     start=1
   fi
 
-  if [ -z "$end" ]; then
-    end=$(cat "$ssf_file" \
-      | wc -l \
-      | xargs
-    )
+  if [ -z "$count" ]; then
+    count=20
   fi
 
   ssf_content=$(cat "$ssf_file" \
-    | head -n $end \
-    | tail -n +$start
+    | head -n $((start + count - 1)) \
+    | tail -n $count
   )
 
   add_chat "ssf" "\n${ssf_content}\n"
