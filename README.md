@@ -135,16 +135,22 @@ Session saved to ~/.bashbrunch/sessions/1792340175-3954-11723.txt
 | `/v` | Show version |
 | `/p [provider]` | Show or change provider (e.g., `/p ollama`) |
 | `/m [model]` | Show or change model (e.g., `/m llama3.1`) |
+| `/k [api_key]` | Show or change API key (e.g., `/k myapikey`) |
 | `/q` | Quit |
 
 ### AI Commands (used by the assistant)
 
 | Command | Description |
 |---------|-------------|
-| `/pass` | Return control to user |
-| `/msg <text>` | Send a message to user |
-| `/sh <cmd>` | Execute a shell command |
 | `/v` | Show version to AI |
+| `/sh <cmd>` | Execute a shell command |
+| `/msg <text>` | Send a message to user |
+| `/pass` | Return control to user |
+| `/exit` | Exit the session |
+| `/sh2a <contents>` | Adds the contents (Bash code) to SSF |
+| `/sh2r [start=0] [count=20]` | Shows count lines of SSF from start line |
+| `/sh2x [persist=0]` | Runs the SSF, also clears SSF if persist is 0 |
+| `/sh2c` | Clears the script file |
 
 ## Providers
 
@@ -176,6 +182,8 @@ Models are completely dependent on the provider. BashBrunch does not provide any
 | `--version` | Show version | `-v` |
 | `--help` | Show help | `-h` |
 | `--session <session_id>` | Resume a previous session | `--resume`, `-s`, `-r` |
+| `--incognito` | Do not save session | `-i` |
+| `--plain` | Disable colors | `-p` |
 
 ## Environment Variables
 
@@ -187,6 +195,8 @@ Models are completely dependent on the provider. BashBrunch does not provide any
 
 - `bash` 3.2+
 - `curl` 8.7+
+
+> Note: Requirements may vary depending on the provider you use.
 
 ---
 
