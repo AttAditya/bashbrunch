@@ -31,7 +31,16 @@ for arg in $@; do
     session_id="INCOGNITO"
   fi
   
+  if [[ "$arg" == "-i" ]]; then
+    incognito=1
+    session_id="INCOGNITO"
+  fi
+
   if [[ "$arg" == "--plain" ]]; then
+    colorfree=1
+  fi
+
+  if [[ "$arg" == "-p" ]]; then
     colorfree=1
   fi
 done
