@@ -22,3 +22,17 @@ if [ "$resuming" -eq 1 ]; then
   session_id="$2"
 fi
 
+incognito=0
+colorfree=0
+
+for arg in $@; do
+  if [[ "$arg" == "--incognito" ]]; then
+    incognito=1
+    session_id="INCOGNITO"
+  fi
+  
+  if [[ "$arg" == "--plain" ]]; then
+    colorfree=1
+  fi
+done
+
