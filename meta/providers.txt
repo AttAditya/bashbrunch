@@ -1,0 +1,4 @@
+ollama-api
+ollama-curl
+ollama
+unset
