@@ -14,8 +14,8 @@ rm -rf .gitignore
 rm -rf .github
 rm -rf ci
 
-find . -type f | sed 's|^\./||' | grep -v '^\.git' >> files.txt
-find . -type d | sed 's|^\./||' | grep -v '^\.git' >> dirs.txt
+find . -type f | sed 's|^\./||' | grep -v '^\.git' | grep -v '^files.txt' >> files.txt
+find . -type d | sed 's|^\./||' | grep -v '^\.git' | grep -v '^\.$' >> dirs.txt
 
 ls providers | grep -o '^[^.]*' >> providers.txt
 
