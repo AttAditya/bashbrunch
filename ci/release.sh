@@ -21,7 +21,6 @@ echo "data" >> dirs.txt
 echo "data/keys" >> dirs.txt
 echo "data/models" >> dirs.txt
 echo "data/sessions" >> dirs.txt
-echo "data/history.txt" >> files.txt
 
 ls providers | grep -o '^[^.]*' >> providers.txt
 
