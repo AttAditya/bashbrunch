@@ -17,6 +17,12 @@ rm -rf ci
 find . -type f | sed 's|^\./||' | grep -v '^\.git' | grep -v '^files.txt' >> files.txt
 find . -type d | sed 's|^\./||' | grep -v '^\.git' | grep -v '^\.$' >> dirs.txt
 
+echo "data" >> dirs.txt
+echo "data/keys" >> dirs.txt
+echo "data/models" >> dirs.txt
+echo "data/sessions" >> dirs.txt
+echo "data/history.txt" >> files.txt
+
 ls providers | grep -o '^[^.]*' >> providers.txt
 
 mkdir meta
