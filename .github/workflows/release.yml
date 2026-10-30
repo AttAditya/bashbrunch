@@ -1,4 +1,4 @@
-name: Publish Branch
+name: Release
 
 on:
   workflow_dispatch:
@@ -18,8 +18,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Run publish script
+      - name: Run release script
         run: |
-          chmod +x ci/publish/main.sh
-          bash ci/publish/main.sh
+          chmod +x ci/release.sh
+          bash ci/release.sh
 
