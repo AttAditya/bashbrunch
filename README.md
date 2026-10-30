@@ -154,7 +154,7 @@ Session saved to ~/.bashbrunch/sessions/1792340175-3954-11723.txt
 
 ## Providers
 
-Providers are the scripts that handle the AI's responses. They can be built-in or custom. They take the model name and chat history as input and output the AI's response.
+Providers are the scripts that handle the AI's responses. They can be built-in or custom. They take the api key (empty string if not needed), model name and chat history as input and output the AI's response.
 
 Find the provider scripts in `providers/` folder in the installation directory (`~/.bashbrunch/providers/`).
 
@@ -163,12 +163,16 @@ Find the provider scripts in `providers/` folder in the installation directory (
 - `unset` - Placeholder when no provider is configured
 - `ollama` - Local models via Ollama
 - `ollama-curl` - Local models via Ollama using curl
+- `ollama-api` - Cloud models via Ollama API using curl
 
 ### Custom Providers
 
 1. Create `~/.bashbrunch/providers/myprovider.sh`
 2. Make it executable: `chmod +x ~/.bashbrunch/providers/myprovider.sh`
-3. The script receives: `$1` = model name, `$2` = chat history
+3. The script receives:
+  - `$1`: api key
+  - `$2`: model name
+  - `$3`: chat history
 4. Output the AI's response to stdout
 
 ### Models
