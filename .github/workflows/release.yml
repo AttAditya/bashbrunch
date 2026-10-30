@@ -1,0 +1,25 @@
+name: Publish Branch
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: github.event_name != 'workflow_dispatch' || github.repository_owner == github.actor
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run publish script
+        run: |
+          chmod +x ci/publish/main.sh
+          bash ci/publish/main.sh
+
